@@ -4,17 +4,21 @@ import 'package:flutter/widgets.dart';
 
 class PrimaryIconButton extends StatelessWidget {
   final VoidCallback onPressed;
+  final bool isEnabled;
   final Widget? child;
 
   const PrimaryIconButton({
     required this.onPressed,
     required this.child,
+    this.isEnabled = true,
     Key? key,
   }) : super(key: key);
 
   void _onTap() {
-    HapticFeedback.mediumImpact();
-    onPressed();
+    if (isEnabled) {
+      HapticFeedback.mediumImpact();
+      onPressed();
+    }
   }
 
   @override
@@ -30,7 +34,7 @@ class PrimaryIconButton extends StatelessWidget {
           dimension: 32,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: theme.colorScheme.primary,
+              color: isEnabled ? theme.colorScheme.primary : theme.colorScheme.primary.withOpacity(0.6),
             ),
             child: Center(child: child),
           ),
