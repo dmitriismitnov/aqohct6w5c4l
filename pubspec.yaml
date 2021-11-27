@@ -1,0 +1,41 @@
+name: aqohct6w5c4l
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.15.0-156.0.dev <3.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  bloc: ^8.0.1
+  built_collection: ^5.1.1
+  cached_network_image: ^3.1.0+1
+  computer: ^2.0.0
+  cupertino_icons: ^1.0.2
+  equatable: ^2.0.3
+  flutter_bloc: ^8.0.0
+  freezed_annotation: ^1.0.0
+  google_fonts: ^2.1.0
+  uuid: ^3.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: ^2.1.5
+  flutter_lints: ^1.0.0
+  freezed: ^1.0.0
+  meta: ^1.7.0
+
+flutter:
+  uses-material-design: true
+

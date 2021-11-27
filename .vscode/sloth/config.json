@@ -1,0 +1,126 @@
+{
+    "global": {
+        "Create module": {
+            "vars": [
+                "moduleName"
+            ],
+            "actions": [
+                {
+                    "action": "create",
+                    "where": [
+                        "modules"
+                    ],
+                    "what": {
+                        "path": [
+                            "module"
+                        ]
+                    }
+                }
+            ]
+        },
+        "Create splitted module": {
+            "vars": [
+                "moduleName"
+            ],
+            "actions": [
+                {
+                    "action": "create",
+                    "where": [
+                        "modules"
+                    ],
+                    "what": {
+                        "path": [
+                            "splitted_module"
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "local": {
+        "New bloc": {
+            "vars": [
+                "BlocName"
+            ],
+            "action": {
+                "what": {
+                    "path": [
+                        "bloc"
+                    ]
+                }
+            }
+        },
+        "New integration test": {
+            "vars": [
+                "TestName"
+            ],
+            "action": {
+                "what": {
+                    "path": [
+                        "integration_test"
+                    ]
+                }
+            }
+        },
+        "New screen": {
+            "vars": [
+                "ScreenName"
+            ],
+            "action": {
+                "what": {
+                    "path": [
+                        "screen"
+                    ]
+                }
+            }
+        },
+        "New stateless widgets": {
+            "vars": [
+                "WidgetName"
+            ],
+            "action": {
+                "what": {
+                    "path": [
+                        "statelessWidget"
+                    ]
+                }
+            }
+        },
+        "New stateful widgets": {
+            "vars": [
+                "WidgetName"
+            ],
+            "action": {
+                "what": {
+                    "path": [
+                        "statefulWidget"
+                    ]
+                }
+            }
+        },
+        "New integration_test file": {
+            "vars": [
+                "name"
+            ],
+            "action": {
+                "what": {
+                    "path": [
+                        "integration_test"
+                    ]
+                }
+            }
+        },
+        "New tests file": {
+            "vars": [
+                "file_name"
+            ],
+            "action": {
+                "what": {
+                    "path": [
+                        "tests"
+                    ]
+                }
+            }
+        }
+    }
+}
