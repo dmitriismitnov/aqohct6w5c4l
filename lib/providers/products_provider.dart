@@ -8,7 +8,7 @@ class ProductProvider {
   }
 
   Future<List<ProductModel>> load({int limit = 30}) async {
-    await _networkDelay();
+    // await _networkDelay();
 
     return [
       for (var i = 0; i < limit; i++) _ProductGenerator.generateRandom(),

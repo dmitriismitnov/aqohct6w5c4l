@@ -1,9 +1,13 @@
+import 'dart:math' as math;
+
 import 'package:aqohct6w5c4l/blocs/products_bloc/products_bloc.dart';
 import 'package:aqohct6w5c4l/models/models.dart';
 import 'package:aqohct6w5c4l/ui/ui.dart';
-import 'package:flutter/material.dart' show Colors, Icons, Theme;
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart' show Icons, Theme;
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class MainScreenProductCard extends StatelessWidget {
@@ -17,51 +21,22 @@ class MainScreenProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _MainScreenProductCardContainer(
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: _MainScreenProductCardBackground(
-              title: product.title,
-              url: product.imageUrl,
-            ),
-          ),
-          Positioned(
-            left: 16,
-            right: 0,
-            bottom: 0,
-            child: _MainScreenProductCardTitle(title: product.title),
-          ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: _MainScreenProductCardRemoveButton(
-              product: product,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MainScreenProductCardSkeleton extends StatelessWidget {
-  const MainScreenProductCardSkeleton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const _MainScreenProductCardContainer(
-      child: DecoratedBox(
-        decoration: BoxDecoration(color: Colors.amber),
-      ),
+      background: _MainScreenProductCardBackground(title: product.title, url: product.imageUrl),
+      title: _MainScreenProductCardTitle(title: product.title),
+      removeButton: _MainScreenProductCardRemoveButton(product: product),
     );
   }
 }
 
 class _MainScreenProductCardContainer extends StatelessWidget {
-  final Widget child;
+  final Widget background;
+  final Widget removeButton;
+  final Widget title;
 
   const _MainScreenProductCardContainer({
-    required this.child,
+    required this.background,
+    required this.removeButton,
+    required this.title,
     Key? key,
   }) : super(key: key);
 
@@ -69,12 +44,27 @@ class _MainScreenProductCardContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,
-      child: child,
+      child: Stack(
+        children: [
+          Positioned.fill(child: background),
+          Positioned(
+            left: 16,
+            right: 0,
+            bottom: 0,
+            child: title,
+          ),
+          Positioned(
+            top: 8,
+            right: 8,
+            child: removeButton,
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _MainScreenProductCardBackground extends StatelessWidget {
+class _MainScreenProductCardBackground extends StatefulWidget {
   final String title;
   final String url;
 
@@ -85,12 +75,36 @@ class _MainScreenProductCardBackground extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<_MainScreenProductCardBackground> createState() => _MainScreenProductCardBackgroundState();
+}
+
+class _MainScreenProductCardBackgroundState extends State<_MainScreenProductCardBackground> {
+  @override
   Widget build(BuildContext context) {
-    return Image.network(
-      url,
+    final theme = Theme.of(context);
+
+    return CachedNetworkImage(
+      imageUrl: widget.url,
       fit: BoxFit.cover,
-      semanticLabel: title,
+      placeholderFadeInDuration: const Duration(milliseconds: 100),
+      placeholder: (context, imageUrl) {
+        return SvgPicture.asset(
+          _randomPlaceholderPath,
+          color: theme.colorScheme.onSurface,
+        );
+      },
     );
+  }
+
+  static const List<String> _placeholdersPaths = <String>[
+    'assets/images/vector/placeholder_a_can.svg',
+    'assets/images/vector/placeholder_bottle.svg',
+    'assets/images/vector/placeholder_pack.svg',
+  ];
+
+  String? _selectedRandomPlaceholderPath;
+  String get _randomPlaceholderPath {
+    return _selectedRandomPlaceholderPath ??= _placeholdersPaths[math.Random().nextInt(_placeholdersPaths.length)];
   }
 }
 

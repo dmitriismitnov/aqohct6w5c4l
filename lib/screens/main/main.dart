@@ -53,7 +53,6 @@ class _MainSceenBlocsProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        HapticFeedback.mediumImpact();
         final bloc = ProductsBloc(productProvider: ProductProvider());
         return bloc..add(const ProductsBlocEvent.loadPart());
       },
@@ -77,6 +76,7 @@ class _MainScreenHeader extends StatelessWidget {
           Text('Меню', style: theme.textTheme.headline1),
           PrimaryIconButton(
             onPressed: () {
+              HapticFeedback.mediumImpact();
               context.read<ProductsBloc>().add(const ProductsBlocEvent.addOneRandom());
             },
             child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
