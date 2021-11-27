@@ -5,7 +5,6 @@ import 'package:aqohct6w5c4l/models/models.dart';
 import 'package:aqohct6w5c4l/ui/ui.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart' show Icons, Theme;
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -64,7 +63,7 @@ class _MainScreenProductCardContainer extends StatelessWidget {
   }
 }
 
-class _MainScreenProductCardBackground extends StatefulWidget {
+class _MainScreenProductCardBackground extends StatelessWidget {
   final String title;
   final String url;
 
@@ -75,22 +74,21 @@ class _MainScreenProductCardBackground extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<_MainScreenProductCardBackground> createState() => _MainScreenProductCardBackgroundState();
-}
-
-class _MainScreenProductCardBackgroundState extends State<_MainScreenProductCardBackground> {
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return CachedNetworkImage(
-      imageUrl: widget.url,
+      imageUrl: url,
       fit: BoxFit.cover,
-      placeholderFadeInDuration: const Duration(milliseconds: 100),
-      placeholder: (context, imageUrl) {
-        return SvgPicture.asset(
-          _randomPlaceholderPath,
-          color: theme.colorScheme.onSurface,
+      fadeOutDuration: const Duration(milliseconds: 500),
+      fadeInDuration: const Duration(milliseconds: 500),
+      errorWidget: (BuildContext context, String url, dynamic error) {
+        return FadeInWidget(
+          duration: const Duration(milliseconds: 500),
+          child: SvgPicture.asset(
+            _randomPlaceholderPath,
+            color: theme.colorScheme.error.withOpacity(0.6),
+          ),
         );
       },
     );
@@ -102,9 +100,8 @@ class _MainScreenProductCardBackgroundState extends State<_MainScreenProductCard
     'assets/images/vector/placeholder_pack.svg',
   ];
 
-  String? _selectedRandomPlaceholderPath;
   String get _randomPlaceholderPath {
-    return _selectedRandomPlaceholderPath ??= _placeholdersPaths[math.Random().nextInt(_placeholdersPaths.length)];
+    return _placeholdersPaths[math.Random().nextInt(_placeholdersPaths.length)];
   }
 }
 
@@ -153,7 +150,6 @@ class _MainScreenProductCardRemoveButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return PrimaryIconButton(
       onPressed: () {
-        HapticFeedback.mediumImpact();
         context.read<ProductsBloc>().add(ProductsBlocEvent.removeOneById(product.id));
       },
       child: const Icon(

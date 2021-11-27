@@ -33,6 +33,7 @@ class MainScreenProductsList extends StatelessWidget {
                 product: product,
               );
             },
+            primary: true,
           );
         }
 

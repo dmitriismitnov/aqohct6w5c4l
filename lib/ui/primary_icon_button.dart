@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' show Theme;
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class PrimaryIconButton extends StatelessWidget {
@@ -11,6 +12,11 @@ class PrimaryIconButton extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  void _onTap() {
+    HapticFeedback.mediumImpact();
+    onPressed();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -19,7 +25,7 @@ class PrimaryIconButton extends StatelessWidget {
       button: true,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: onPressed,
+        onTap: _onTap,
         child: SizedBox.square(
           dimension: 32,
           child: DecoratedBox(

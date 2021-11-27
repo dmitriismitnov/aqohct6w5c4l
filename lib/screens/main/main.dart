@@ -27,6 +27,7 @@ class MainScreen extends StatelessWidget {
             decoration: BoxDecoration(color: theme.colorScheme.background),
             child: Column(
               children: const [
+                SizedBox(height: 24),
                 _MainScreenHeader(),
                 SizedBox(height: 8),
                 Expanded(
@@ -76,7 +77,6 @@ class _MainScreenHeader extends StatelessWidget {
           Text('Меню', style: theme.textTheme.headline1),
           PrimaryIconButton(
             onPressed: () {
-              HapticFeedback.mediumImpact();
               context.read<ProductsBloc>().add(const ProductsBlocEvent.addOneRandom());
             },
             child: Icon(Icons.add, color: theme.colorScheme.onPrimary),

@@ -2,13 +2,11 @@ part of 'providers.dart';
 
 class ProductProvider {
   Future<ProductModel> create() async {
-    await _networkDelay();
-
     return _ProductGenerator.generateRandom();
   }
 
   Future<List<ProductModel>> load({int limit = 30}) async {
-    // await _networkDelay();
+    await _networkDelay();
 
     return [
       for (var i = 0; i < limit; i++) _ProductGenerator.generateRandom(),
