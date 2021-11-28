@@ -15,21 +15,21 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text('Меню', style: theme.textTheme.headline1),
-        actions: const [
-          _MainScreenAppBarAddProductAction(),
-        ],
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarBrightness: theme.colorScheme.brightness,
+    return _MainSceenBlocsProvider(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: false,
+          title: Text('Меню', style: theme.textTheme.headline1),
+          actions: const [
+            _MainScreenAppBarAddProductAction(),
+          ],
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarBrightness: theme.colorScheme.brightness,
+          ),
         ),
+        body: const MainScreenProductsList(),
+        backgroundColor: theme.colorScheme.background,
       ),
-      body: const _MainSceenBlocsProvider(
-        child: MainScreenProductsList(),
-      ),
-      backgroundColor: theme.colorScheme.background,
     );
   }
 }
