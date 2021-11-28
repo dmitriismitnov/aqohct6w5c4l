@@ -20,7 +20,7 @@ class MainScreenProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _MainScreenProductCardContainer(
-      background: _MainScreenProductCardBackground(title: product.title, url: product.imageUrl),
+      image: _MainScreenProductCardImage(title: product.title, url: product.imageUrl),
       title: _MainScreenProductCardTitle(title: product.title),
       removeButton: _MainScreenProductCardRemoveButton(product: product),
     );
@@ -28,12 +28,12 @@ class MainScreenProductCard extends StatelessWidget {
 }
 
 class _MainScreenProductCardContainer extends StatelessWidget {
-  final Widget background;
+  final Widget image;
   final Widget removeButton;
   final Widget title;
 
   const _MainScreenProductCardContainer({
-    required this.background,
+    required this.image,
     required this.removeButton,
     required this.title,
     Key? key,
@@ -41,33 +41,33 @@ class _MainScreenProductCardContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Stack(
-        children: [
-          Positioned.fill(child: background),
-          Positioned(
-            left: 16,
-            right: 0,
-            bottom: 0,
-            child: title,
+    return Stack(
+      children: [
+        Positioned(
+          child: Column(
+            children: [
+              const SizedBox.square(dimension: 8),
+              Expanded(child: image),
+              const SizedBox.square(dimension: 28),
+              title,
+            ],
           ),
-          Positioned(
-            top: 8,
-            right: 8,
-            child: removeButton,
-          ),
-        ],
-      ),
+        ),
+        Positioned(
+          top: 8,
+          right: 8,
+          child: removeButton,
+        ),
+      ],
     );
   }
 }
 
-class _MainScreenProductCardBackground extends StatelessWidget {
+class _MainScreenProductCardImage extends StatelessWidget {
   final String title;
   final String url;
 
-  const _MainScreenProductCardBackground({
+  const _MainScreenProductCardImage({
     required this.title,
     required this.url,
     Key? key,
@@ -77,20 +77,23 @@ class _MainScreenProductCardBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return CachedNetworkImage(
-      imageUrl: url,
-      fit: BoxFit.cover,
-      fadeOutDuration: const Duration(milliseconds: 500),
-      fadeInDuration: const Duration(milliseconds: 500),
-      errorWidget: (BuildContext context, String url, dynamic error) {
-        return FadeWidget(
-          duration: const Duration(milliseconds: 500),
-          child: SvgPicture.asset(
-            _randomPlaceholderPath,
-            color: theme.colorScheme.error.withOpacity(0.6),
-          ),
-        );
-      },
+    return AspectRatio(
+      aspectRatio: 1,
+      child: CachedNetworkImage(
+        imageUrl: url,
+        fit: BoxFit.cover,
+        fadeOutDuration: const Duration(milliseconds: 500),
+        fadeInDuration: const Duration(milliseconds: 500),
+        errorWidget: (BuildContext context, String url, dynamic error) {
+          return FadeWidget(
+            duration: const Duration(milliseconds: 500),
+            child: SvgPicture.asset(
+              _randomPlaceholderPath,
+              color: theme.colorScheme.error.withOpacity(0.6),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -117,22 +120,17 @@ class _MainScreenProductCardTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: theme.colorScheme.background,
-            blurRadius: 4,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Text(
-        title,
-        textAlign: TextAlign.left,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: theme.textTheme.subtitle1,
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(
+          title,
+          textAlign: TextAlign.left,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.subtitle1,
+        ),
       ),
     );
   }
