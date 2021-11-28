@@ -1,11 +1,17 @@
 part of 'providers.dart';
 
 class ProductsProvider {
+  final int _maxLimit;
+
+  ProductsProvider({
+    required int maxLimit,
+  }) : _maxLimit = maxLimit;
+
   int _removed = 0;
   int _returned = 0;
 
   Future<bool> retrieveHasMoreReached() async {
-    return _returned + _removed == _ProductGenerator.generateRandomProductsLength;
+    return _returned + _removed == _maxLimit;
   }
 
   Future<ProductModel?> create() async {
@@ -13,7 +19,7 @@ class ProductsProvider {
       _removed -= 1;
     }
 
-    if (_returned + _removed + 1 > _ProductGenerator.generateRandomProductsLength) {
+    if (_returned + _removed + 1 > _maxLimit) {
       return null;
     }
 
@@ -23,8 +29,6 @@ class ProductsProvider {
   }
 
   Future<List<ProductModel>> findPart({int skip = 0, int limit = 30}) async {
-    await _networkDelay();
-
     final resultLength = _calcResultLength(_returned, limit);
     _returned += resultLength;
 
@@ -36,7 +40,7 @@ class ProductsProvider {
   Future<List<ProductModel>> findAll() async {
     final resultLength = _calcResultLength(
       _returned,
-      _ProductGenerator.generateRandomProductsLength,
+      _maxLimit,
     );
 
     if (resultLength == 0) {
@@ -76,11 +80,11 @@ class ProductsProvider {
   }
 
   int _calcResultLength(int skip, int limit) {
-    if (_ProductGenerator.generateRandomProductsLength - _removed <= skip) {
+    if (_maxLimit - _removed <= skip) {
       return 0;
     }
 
-    final diff = _ProductGenerator.generateRandomProductsLength - _removed - (skip + limit);
+    final diff = _maxLimit - _removed - (skip + limit);
 
     if (diff > 0) {
       if (diff >= limit) {
@@ -103,11 +107,6 @@ class ProductsProvider {
 }
 
 abstract class _ProductGenerator {
-  static int? _productsLength;
-  static int get generateRandomProductsLength {
-    return _productsLength ??= math.Random().nextInt(2) == 1 ? 1000 : 10000;
-  }
-
   static ProductModel generateRandomProduct() {
     final randomTitleUrlEntry = dictionary.entries.elementAt(
       math.Random().nextInt(dictionary.length),

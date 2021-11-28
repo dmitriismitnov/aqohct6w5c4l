@@ -1,15 +1,23 @@
+import 'dart:math' as math;
+
+import 'package:aqohct6w5c4l/providers/providers.dart';
 import 'package:flutter/material.dart' show Brightness, ColorScheme, Colors, MaterialApp, TextTheme, ThemeData;
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/main/main.dart';
 
 void main() {
-  runApp(const App());
+  runApp(
+    const _AppProviders(
+      child: _App(),
+    ),
+  );
 }
 
-class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+class _App extends StatelessWidget {
+  const _App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,5 +58,30 @@ class App extends StatelessWidget {
       ),
       home: const MainScreen(),
     );
+  }
+}
+
+class _AppProviders extends StatelessWidget {
+  final Widget child;
+
+  const _AppProviders({
+    required this.child,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider<ProductsProvider>(
+      create: (context) {
+        return ProductsProvider(
+          maxLimit: _generateRandomProductsLength(),
+        );
+      },
+      child: child,
+    );
+  }
+
+  int _generateRandomProductsLength() {
+    return math.Random().nextInt(2) == 1 ? 100000 : 1000000;
   }
 }
