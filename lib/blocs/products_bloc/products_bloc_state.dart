@@ -4,19 +4,25 @@ part of 'products_bloc.dart';
 class ProductsBlocState with _$ProductsBlocState {
   const ProductsBlocState._();
 
-  const factory ProductsBlocState.initial() = ProductsBlocStateInitial;
+  const factory ProductsBlocState.initial({
+    @Default([]) List<ProductModel>? products,
+    @Default(false) bool? hasMoreReached,
+  }) = ProductsBlocStateInitial;
 
   const factory ProductsBlocState.pending({
-    @Default([]) List<ProductModel> products,
+    @Default([]) List<ProductModel>? products,
+    @Default(false) bool? hasMoreReached,
   }) = ProductsBlocStatePending;
 
   const factory ProductsBlocState.succeeded({
-    @Default([]) List<ProductModel> products,
+    @Default([]) List<ProductModel>? products,
+    @Default(false) bool? hasMoreReached,
   }) = ProductsBlocStateSucceeded;
 
   const factory ProductsBlocState.failed({
     required String message,
-    @Default([]) List<ProductModel> products,
+    @Default([]) List<ProductModel>? products,
+    @Default(false) bool? hasMoreReached,
   }) = ProductsBlocStateFailed;
 
   bool get isInitialState => this is ProductsBlocStateInitial;
@@ -38,6 +44,12 @@ class ProductsBlocState with _$ProductsBlocState {
   String? get maybeFailedMessage => tryAsFailedState?.message;
 
   List<ProductModel> get unsafeProducts => maybeProducts!;
-  List<ProductModel>? get maybeProducts =>
-      tryAsPendingState?.products ?? tryAsSucceededState?.products ?? tryAsFailedState?.products;
+  List<ProductModel>? get maybeProducts => products;
+
+  bool get unsafeHasMoreReached => maybeHasMoreReached!;
+  bool? get maybeHasMoreReached =>
+      tryAsInitialState?.hasMoreReached ??
+      tryAsPendingState?.hasMoreReached ??
+      tryAsSucceededState?.hasMoreReached ??
+      tryAsFailedState?.hasMoreReached;
 }

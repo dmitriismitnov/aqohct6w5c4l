@@ -23,22 +23,83 @@ class ProductsBloc extends Bloc<ProductsBlocEvent, ProductsBlocState> {
 
   var _productsStore = BuiltList<ProductModel>();
 
+  Future<void> _addOneRandom(ProductsBlocEventAddOneRandom event, Emitter<ProductsBlocState> emit) async {
+    if (state.maybeHasMoreReached == true) {
+      return;
+    }
+
+    emit(
+      ProductsBlocState.pending(
+        products: _productsStore.toList(),
+        hasMoreReached: state.hasMoreReached,
+      ),
+    );
+
+    final createdProduct = await _productProvider.create();
+
+    if (createdProduct != null) {
+      final productStoreBuilder = _productsStore.toBuilder()..insert(0, createdProduct);
+      _productsStore = productStoreBuilder.build();
+    }
+
+    emit(
+      ProductsBlocState.succeeded(
+        products: _productsStore.toList(),
+        hasMoreReached: await _productProvider.retrieveHasMoreReached(),
+      ),
+    );
+  }
+
   Future<void> _loadPart(ProductsBlocEventLoadPart event, Emitter<ProductsBlocState> emit) async {
-    emit(ProductsBlocState.pending(products: _productsStore.toList()));
+    const loadLimit = 30;
 
-    final productsBatch = await _productProvider.load(limit: 30);
-    final productStoreBuilder = _productsStore.toBuilder()
-      ..addAll(
-        productsBatch,
+    emit(
+      ProductsBlocState.pending(
+        products: _productsStore.toList(),
+        hasMoreReached: false,
+      ),
+    );
+
+    final productsBatch = await _productProvider.load(
+      skip: _productsStore.length,
+      limit: loadLimit,
+    );
+
+    if (productsBatch.isNotEmpty) {
+      final productStoreBuilder = _productsStore.toBuilder()
+        ..addAll(
+          productsBatch,
+        );
+
+      _productsStore = productStoreBuilder.build();
+
+      return emit(
+        ProductsBlocState.succeeded(
+          products: _productsStore.toList(),
+          hasMoreReached: productsBatch.length != loadLimit,
+        ),
       );
+    }
 
-    _productsStore = productStoreBuilder.build();
-
-    emit(ProductsBlocState.succeeded(products: _productsStore.toList()));
+    if (productsBatch.isEmpty && state.maybeHasMoreReached != true) {
+      return emit(
+        ProductsBlocState.succeeded(
+          products: _productsStore.toList(),
+          hasMoreReached: true,
+        ),
+      );
+    }
   }
 
   Future<void> _removeOneById(ProductsBlocEventRemoveOneById event, Emitter<ProductsBlocState> emit) async {
-    emit(ProductsBlocState.pending(products: _productsStore.toList()));
+    emit(
+      ProductsBlocState.pending(
+        products: _productsStore.toList(),
+        hasMoreReached: state.hasMoreReached,
+      ),
+    );
+
+    await _productProvider.removeById(event.id);
 
     final productStoreBuilder = _productsStore.toBuilder()
       ..removeWhere(
@@ -47,17 +108,11 @@ class ProductsBloc extends Bloc<ProductsBlocEvent, ProductsBlocState> {
 
     _productsStore = productStoreBuilder.build();
 
-    emit(ProductsBlocState.succeeded(products: _productsStore.toList()));
-  }
-
-  Future<void> _addOneRandom(ProductsBlocEventAddOneRandom event, Emitter<ProductsBlocState> emit) async {
-    emit(ProductsBlocState.pending(products: _productsStore.toList()));
-
-    final createdProduct = await _productProvider.create();
-    final productStoreBuilder = _productsStore.toBuilder()..insert(0, createdProduct);
-
-    _productsStore = productStoreBuilder.build();
-
-    emit(ProductsBlocState.succeeded(products: _productsStore.toList()));
+    emit(
+      ProductsBlocState.succeeded(
+        products: _productsStore.toList(),
+        hasMoreReached: false,
+      ),
+    );
   }
 }

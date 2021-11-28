@@ -482,28 +482,38 @@ abstract class ProductsBlocEventRemoveOneById implements ProductsBlocEvent {
 class _$ProductsBlocStateTearOff {
   const _$ProductsBlocStateTearOff();
 
-  ProductsBlocStateInitial initial() {
-    return const ProductsBlocStateInitial();
+  ProductsBlocStateInitial initial(
+      {List<ProductModel>? products = const [], bool? hasMoreReached = false}) {
+    return ProductsBlocStateInitial(
+      products: products,
+      hasMoreReached: hasMoreReached,
+    );
   }
 
-  ProductsBlocStatePending pending({List<ProductModel> products = const []}) {
+  ProductsBlocStatePending pending(
+      {List<ProductModel>? products = const [], bool? hasMoreReached = false}) {
     return ProductsBlocStatePending(
       products: products,
+      hasMoreReached: hasMoreReached,
     );
   }
 
   ProductsBlocStateSucceeded succeeded(
-      {List<ProductModel> products = const []}) {
+      {List<ProductModel>? products = const [], bool? hasMoreReached = false}) {
     return ProductsBlocStateSucceeded(
       products: products,
+      hasMoreReached: hasMoreReached,
     );
   }
 
   ProductsBlocStateFailed failed(
-      {required String message, List<ProductModel> products = const []}) {
+      {required String message,
+      List<ProductModel>? products = const [],
+      bool? hasMoreReached = false}) {
     return ProductsBlocStateFailed(
       message: message,
       products: products,
+      hasMoreReached: hasMoreReached,
     );
   }
 }
@@ -513,29 +523,49 @@ const $ProductsBlocState = _$ProductsBlocStateTearOff();
 
 /// @nodoc
 mixin _$ProductsBlocState {
+  List<ProductModel>? get products => throw _privateConstructorUsedError;
+  bool? get hasMoreReached => throw _privateConstructorUsedError;
+
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<ProductModel> products) pending,
-    required TResult Function(List<ProductModel> products) succeeded,
-    required TResult Function(String message, List<ProductModel> products)
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        initial,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        pending,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        succeeded,
+    required TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)
         failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -564,6 +594,10 @@ mixin _$ProductsBlocState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ProductsBlocStateCopyWith<ProductsBlocState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -571,6 +605,7 @@ abstract class $ProductsBlocStateCopyWith<$Res> {
   factory $ProductsBlocStateCopyWith(
           ProductsBlocState value, $Res Function(ProductsBlocState) then) =
       _$ProductsBlocStateCopyWithImpl<$Res>;
+  $Res call({List<ProductModel>? products, bool? hasMoreReached});
 }
 
 /// @nodoc
@@ -581,13 +616,33 @@ class _$ProductsBlocStateCopyWithImpl<$Res>
   final ProductsBlocState _value;
   // ignore: unused_field
   final $Res Function(ProductsBlocState) _then;
+
+  @override
+  $Res call({
+    Object? products = freezed,
+    Object? hasMoreReached = freezed,
+  }) {
+    return _then(_value.copyWith(
+      products: products == freezed
+          ? _value.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>?,
+      hasMoreReached: hasMoreReached == freezed
+          ? _value.hasMoreReached
+          : hasMoreReached // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
 }
 
 /// @nodoc
-abstract class $ProductsBlocStateInitialCopyWith<$Res> {
+abstract class $ProductsBlocStateInitialCopyWith<$Res>
+    implements $ProductsBlocStateCopyWith<$Res> {
   factory $ProductsBlocStateInitialCopyWith(ProductsBlocStateInitial value,
           $Res Function(ProductsBlocStateInitial) then) =
       _$ProductsBlocStateInitialCopyWithImpl<$Res>;
+  @override
+  $Res call({List<ProductModel>? products, bool? hasMoreReached});
 }
 
 /// @nodoc
@@ -601,61 +656,115 @@ class _$ProductsBlocStateInitialCopyWithImpl<$Res>
   @override
   ProductsBlocStateInitial get _value =>
       super._value as ProductsBlocStateInitial;
+
+  @override
+  $Res call({
+    Object? products = freezed,
+    Object? hasMoreReached = freezed,
+  }) {
+    return _then(ProductsBlocStateInitial(
+      products: products == freezed
+          ? _value.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>?,
+      hasMoreReached: hasMoreReached == freezed
+          ? _value.hasMoreReached
+          : hasMoreReached // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$ProductsBlocStateInitial extends ProductsBlocStateInitial {
-  const _$ProductsBlocStateInitial() : super._();
+  const _$ProductsBlocStateInitial(
+      {this.products = const [], this.hasMoreReached = false})
+      : super._();
+
+  @JsonKey(defaultValue: const [])
+  @override
+  final List<ProductModel>? products;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool? hasMoreReached;
 
   @override
   String toString() {
-    return 'ProductsBlocState.initial()';
+    return 'ProductsBlocState.initial(products: $products, hasMoreReached: $hasMoreReached)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ProductsBlocStateInitial);
+        (other.runtimeType == runtimeType &&
+            other is ProductsBlocStateInitial &&
+            const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.hasMoreReached, hasMoreReached) ||
+                other.hasMoreReached == hasMoreReached));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(products), hasMoreReached);
+
+  @JsonKey(ignore: true)
+  @override
+  $ProductsBlocStateInitialCopyWith<ProductsBlocStateInitial> get copyWith =>
+      _$ProductsBlocStateInitialCopyWithImpl<ProductsBlocStateInitial>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<ProductModel> products) pending,
-    required TResult Function(List<ProductModel> products) succeeded,
-    required TResult Function(String message, List<ProductModel> products)
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        initial,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        pending,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        succeeded,
+    required TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)
         failed,
   }) {
-    return initial();
+    return initial(products, hasMoreReached);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
   }) {
-    return initial?.call();
+    return initial?.call(products, hasMoreReached);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(products, hasMoreReached);
     }
     return orElse();
   }
@@ -699,16 +808,29 @@ class _$ProductsBlocStateInitial extends ProductsBlocStateInitial {
 }
 
 abstract class ProductsBlocStateInitial extends ProductsBlocState {
-  const factory ProductsBlocStateInitial() = _$ProductsBlocStateInitial;
+  const factory ProductsBlocStateInitial(
+      {List<ProductModel>? products,
+      bool? hasMoreReached}) = _$ProductsBlocStateInitial;
   const ProductsBlocStateInitial._() : super._();
+
+  @override
+  List<ProductModel>? get products;
+  @override
+  bool? get hasMoreReached;
+  @override
+  @JsonKey(ignore: true)
+  $ProductsBlocStateInitialCopyWith<ProductsBlocStateInitial> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProductsBlocStatePendingCopyWith<$Res> {
+abstract class $ProductsBlocStatePendingCopyWith<$Res>
+    implements $ProductsBlocStateCopyWith<$Res> {
   factory $ProductsBlocStatePendingCopyWith(ProductsBlocStatePending value,
           $Res Function(ProductsBlocStatePending) then) =
       _$ProductsBlocStatePendingCopyWithImpl<$Res>;
-  $Res call({List<ProductModel> products});
+  @override
+  $Res call({List<ProductModel>? products, bool? hasMoreReached});
 }
 
 /// @nodoc
@@ -726,12 +848,17 @@ class _$ProductsBlocStatePendingCopyWithImpl<$Res>
   @override
   $Res call({
     Object? products = freezed,
+    Object? hasMoreReached = freezed,
   }) {
     return _then(ProductsBlocStatePending(
       products: products == freezed
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>,
+              as List<ProductModel>?,
+      hasMoreReached: hasMoreReached == freezed
+          ? _value.hasMoreReached
+          : hasMoreReached // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -739,15 +866,20 @@ class _$ProductsBlocStatePendingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProductsBlocStatePending extends ProductsBlocStatePending {
-  const _$ProductsBlocStatePending({this.products = const []}) : super._();
+  const _$ProductsBlocStatePending(
+      {this.products = const [], this.hasMoreReached = false})
+      : super._();
 
   @JsonKey(defaultValue: const [])
   @override
-  final List<ProductModel> products;
+  final List<ProductModel>? products;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool? hasMoreReached;
 
   @override
   String toString() {
-    return 'ProductsBlocState.pending(products: $products)';
+    return 'ProductsBlocState.pending(products: $products, hasMoreReached: $hasMoreReached)';
   }
 
   @override
@@ -755,12 +887,14 @@ class _$ProductsBlocStatePending extends ProductsBlocStatePending {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ProductsBlocStatePending &&
-            const DeepCollectionEquality().equals(other.products, products));
+            const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.hasMoreReached, hasMoreReached) ||
+                other.hasMoreReached == hasMoreReached));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(products));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(products), hasMoreReached);
 
   @JsonKey(ignore: true)
   @override
@@ -771,37 +905,54 @@ class _$ProductsBlocStatePending extends ProductsBlocStatePending {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<ProductModel> products) pending,
-    required TResult Function(List<ProductModel> products) succeeded,
-    required TResult Function(String message, List<ProductModel> products)
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        initial,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        pending,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        succeeded,
+    required TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)
         failed,
   }) {
-    return pending(products);
+    return pending(products, hasMoreReached);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
   }) {
-    return pending?.call(products);
+    return pending?.call(products, hasMoreReached);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
     required TResult orElse(),
   }) {
     if (pending != null) {
-      return pending(products);
+      return pending(products, hasMoreReached);
     }
     return orElse();
   }
@@ -845,22 +996,29 @@ class _$ProductsBlocStatePending extends ProductsBlocStatePending {
 }
 
 abstract class ProductsBlocStatePending extends ProductsBlocState {
-  const factory ProductsBlocStatePending({List<ProductModel> products}) =
-      _$ProductsBlocStatePending;
+  const factory ProductsBlocStatePending(
+      {List<ProductModel>? products,
+      bool? hasMoreReached}) = _$ProductsBlocStatePending;
   const ProductsBlocStatePending._() : super._();
 
-  List<ProductModel> get products;
+  @override
+  List<ProductModel>? get products;
+  @override
+  bool? get hasMoreReached;
+  @override
   @JsonKey(ignore: true)
   $ProductsBlocStatePendingCopyWith<ProductsBlocStatePending> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProductsBlocStateSucceededCopyWith<$Res> {
+abstract class $ProductsBlocStateSucceededCopyWith<$Res>
+    implements $ProductsBlocStateCopyWith<$Res> {
   factory $ProductsBlocStateSucceededCopyWith(ProductsBlocStateSucceeded value,
           $Res Function(ProductsBlocStateSucceeded) then) =
       _$ProductsBlocStateSucceededCopyWithImpl<$Res>;
-  $Res call({List<ProductModel> products});
+  @override
+  $Res call({List<ProductModel>? products, bool? hasMoreReached});
 }
 
 /// @nodoc
@@ -878,12 +1036,17 @@ class _$ProductsBlocStateSucceededCopyWithImpl<$Res>
   @override
   $Res call({
     Object? products = freezed,
+    Object? hasMoreReached = freezed,
   }) {
     return _then(ProductsBlocStateSucceeded(
       products: products == freezed
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>,
+              as List<ProductModel>?,
+      hasMoreReached: hasMoreReached == freezed
+          ? _value.hasMoreReached
+          : hasMoreReached // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -891,15 +1054,20 @@ class _$ProductsBlocStateSucceededCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProductsBlocStateSucceeded extends ProductsBlocStateSucceeded {
-  const _$ProductsBlocStateSucceeded({this.products = const []}) : super._();
+  const _$ProductsBlocStateSucceeded(
+      {this.products = const [], this.hasMoreReached = false})
+      : super._();
 
   @JsonKey(defaultValue: const [])
   @override
-  final List<ProductModel> products;
+  final List<ProductModel>? products;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool? hasMoreReached;
 
   @override
   String toString() {
-    return 'ProductsBlocState.succeeded(products: $products)';
+    return 'ProductsBlocState.succeeded(products: $products, hasMoreReached: $hasMoreReached)';
   }
 
   @override
@@ -907,12 +1075,14 @@ class _$ProductsBlocStateSucceeded extends ProductsBlocStateSucceeded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ProductsBlocStateSucceeded &&
-            const DeepCollectionEquality().equals(other.products, products));
+            const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.hasMoreReached, hasMoreReached) ||
+                other.hasMoreReached == hasMoreReached));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(products));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(products), hasMoreReached);
 
   @JsonKey(ignore: true)
   @override
@@ -924,37 +1094,54 @@ class _$ProductsBlocStateSucceeded extends ProductsBlocStateSucceeded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<ProductModel> products) pending,
-    required TResult Function(List<ProductModel> products) succeeded,
-    required TResult Function(String message, List<ProductModel> products)
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        initial,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        pending,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        succeeded,
+    required TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)
         failed,
   }) {
-    return succeeded(products);
+    return succeeded(products, hasMoreReached);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
   }) {
-    return succeeded?.call(products);
+    return succeeded?.call(products, hasMoreReached);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
     required TResult orElse(),
   }) {
     if (succeeded != null) {
-      return succeeded(products);
+      return succeeded(products, hasMoreReached);
     }
     return orElse();
   }
@@ -998,22 +1185,30 @@ class _$ProductsBlocStateSucceeded extends ProductsBlocStateSucceeded {
 }
 
 abstract class ProductsBlocStateSucceeded extends ProductsBlocState {
-  const factory ProductsBlocStateSucceeded({List<ProductModel> products}) =
-      _$ProductsBlocStateSucceeded;
+  const factory ProductsBlocStateSucceeded(
+      {List<ProductModel>? products,
+      bool? hasMoreReached}) = _$ProductsBlocStateSucceeded;
   const ProductsBlocStateSucceeded._() : super._();
 
-  List<ProductModel> get products;
+  @override
+  List<ProductModel>? get products;
+  @override
+  bool? get hasMoreReached;
+  @override
   @JsonKey(ignore: true)
   $ProductsBlocStateSucceededCopyWith<ProductsBlocStateSucceeded>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProductsBlocStateFailedCopyWith<$Res> {
+abstract class $ProductsBlocStateFailedCopyWith<$Res>
+    implements $ProductsBlocStateCopyWith<$Res> {
   factory $ProductsBlocStateFailedCopyWith(ProductsBlocStateFailed value,
           $Res Function(ProductsBlocStateFailed) then) =
       _$ProductsBlocStateFailedCopyWithImpl<$Res>;
-  $Res call({String message, List<ProductModel> products});
+  @override
+  $Res call(
+      {String message, List<ProductModel>? products, bool? hasMoreReached});
 }
 
 /// @nodoc
@@ -1031,6 +1226,7 @@ class _$ProductsBlocStateFailedCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
     Object? products = freezed,
+    Object? hasMoreReached = freezed,
   }) {
     return _then(ProductsBlocStateFailed(
       message: message == freezed
@@ -1040,7 +1236,11 @@ class _$ProductsBlocStateFailedCopyWithImpl<$Res>
       products: products == freezed
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>,
+              as List<ProductModel>?,
+      hasMoreReached: hasMoreReached == freezed
+          ? _value.hasMoreReached
+          : hasMoreReached // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1049,18 +1249,23 @@ class _$ProductsBlocStateFailedCopyWithImpl<$Res>
 
 class _$ProductsBlocStateFailed extends ProductsBlocStateFailed {
   const _$ProductsBlocStateFailed(
-      {required this.message, this.products = const []})
+      {required this.message,
+      this.products = const [],
+      this.hasMoreReached = false})
       : super._();
 
   @override
   final String message;
   @JsonKey(defaultValue: const [])
   @override
-  final List<ProductModel> products;
+  final List<ProductModel>? products;
+  @JsonKey(defaultValue: false)
+  @override
+  final bool? hasMoreReached;
 
   @override
   String toString() {
-    return 'ProductsBlocState.failed(message: $message, products: $products)';
+    return 'ProductsBlocState.failed(message: $message, products: $products, hasMoreReached: $hasMoreReached)';
   }
 
   @override
@@ -1069,12 +1274,14 @@ class _$ProductsBlocStateFailed extends ProductsBlocStateFailed {
         (other.runtimeType == runtimeType &&
             other is ProductsBlocStateFailed &&
             (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality().equals(other.products, products));
+            const DeepCollectionEquality().equals(other.products, products) &&
+            (identical(other.hasMoreReached, hasMoreReached) ||
+                other.hasMoreReached == hasMoreReached));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, message, const DeepCollectionEquality().hash(products));
+  int get hashCode => Object.hash(runtimeType, message,
+      const DeepCollectionEquality().hash(products), hasMoreReached);
 
   @JsonKey(ignore: true)
   @override
@@ -1085,37 +1292,54 @@ class _$ProductsBlocStateFailed extends ProductsBlocStateFailed {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function(List<ProductModel> products) pending,
-    required TResult Function(List<ProductModel> products) succeeded,
-    required TResult Function(String message, List<ProductModel> products)
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        initial,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        pending,
+    required TResult Function(
+            List<ProductModel>? products, bool? hasMoreReached)
+        succeeded,
+    required TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)
         failed,
   }) {
-    return failed(message, products);
+    return failed(message, products, hasMoreReached);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
   }) {
-    return failed?.call(message, products);
+    return failed?.call(message, products, hasMoreReached);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function(List<ProductModel> products)? pending,
-    TResult Function(List<ProductModel> products)? succeeded,
-    TResult Function(String message, List<ProductModel> products)? failed,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        initial,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        pending,
+    TResult Function(List<ProductModel>? products, bool? hasMoreReached)?
+        succeeded,
+    TResult Function(
+            String message, List<ProductModel>? products, bool? hasMoreReached)?
+        failed,
     required TResult orElse(),
   }) {
     if (failed != null) {
-      return failed(message, products);
+      return failed(message, products, hasMoreReached);
     }
     return orElse();
   }
@@ -1161,11 +1385,16 @@ class _$ProductsBlocStateFailed extends ProductsBlocStateFailed {
 abstract class ProductsBlocStateFailed extends ProductsBlocState {
   const factory ProductsBlocStateFailed(
       {required String message,
-      List<ProductModel> products}) = _$ProductsBlocStateFailed;
+      List<ProductModel>? products,
+      bool? hasMoreReached}) = _$ProductsBlocStateFailed;
   const ProductsBlocStateFailed._() : super._();
 
   String get message;
-  List<ProductModel> get products;
+  @override
+  List<ProductModel>? get products;
+  @override
+  bool? get hasMoreReached;
+  @override
   @JsonKey(ignore: true)
   $ProductsBlocStateFailedCopyWith<ProductsBlocStateFailed> get copyWith =>
       throw _privateConstructorUsedError;

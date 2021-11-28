@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 
-class FadeInWidget extends StatefulWidget {
+class FadeWidget extends StatefulWidget {
   final Widget child;
   final Curve curve;
   final Duration duration;
 
-  const FadeInWidget({
+  const FadeWidget({
     required this.child,
     this.curve = Curves.linear,
     this.duration = const Duration(milliseconds: 200),
@@ -13,10 +13,10 @@ class FadeInWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FadeInWidgetState createState() => _FadeInWidgetState();
+  _FadeWidgetState createState() => _FadeWidgetState();
 }
 
-class _FadeInWidgetState extends State<FadeInWidget> with SingleTickerProviderStateMixin {
+class _FadeWidgetState extends State<FadeWidget> with SingleTickerProviderStateMixin {
   late Animation<double> opacity;
   late AnimationController controller;
 

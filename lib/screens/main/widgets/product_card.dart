@@ -83,7 +83,7 @@ class _MainScreenProductCardBackground extends StatelessWidget {
       fadeOutDuration: const Duration(milliseconds: 500),
       fadeInDuration: const Duration(milliseconds: 500),
       errorWidget: (BuildContext context, String url, dynamic error) {
-        return FadeInWidget(
+        return FadeWidget(
           duration: const Duration(milliseconds: 500),
           child: SvgPicture.asset(
             _randomPlaceholderPath,
