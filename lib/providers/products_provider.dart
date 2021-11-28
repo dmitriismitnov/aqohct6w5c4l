@@ -120,14 +120,14 @@ abstract class _ProductGenerator {
   }
 
   static const dictionary = <String, String>{
-    'Coca-Cola': 'https://raw.githubusercontent.com/dmitriismitnov/test2/master/cola.png',
-    'Fanta': 'https://raw.githubusercontent.com/dmitriismitnov/test2/master/fanta.png',
-    'Sprite': 'https://raw.githubusercontent.com/dmitriismitnov/test2/master/sprite.png',
-    'Lipton Ice Tea': 'https://raw.githubusercontent.com/dmitriismitnov/test2/master/lipton.png',
-    'Rich Apple': 'https://raw.githubusercontent.com/dmitriismitnov/test2/master/rich_apple.png',
-    'Rich Grapefruit': 'https://raw.githubusercontent.com/dmitriismitnov/test2/master/rich_grapefruit.png',
-    'Mirinda': 'https://raw.githubusercontent.com/dmitriismitnov/test2/master/mirinda.png',
-    '7 UP': 'https://raw.githubusercontent.com/dmitriismitnov/test2/master/seven_up.png',
-    'Pepsi': 'https://raw.githubusercontent.com/dmitriismitnov/test2/master/pepsi.png',
+    'Coca-Cola': 'https://raw.githubusercontent.com/dmitriismitnov/aqohct6w5c4l/master/data/cola.png',
+    'Fanta': 'https://raw.githubusercontent.com/dmitriismitnov/aqohct6w5c4l/master/data/fanta.png',
+    'Sprite': 'https://raw.githubusercontent.com/dmitriismitnov/aqohct6w5c4l/master/data/sprite.png',
+    'Lipton Ice Tea': 'https://raw.githubusercontent.com/dmitriismitnov/aqohct6w5c4l/master/data/lipton.png',
+    'Rich Apple': 'https://raw.githubusercontent.com/dmitriismitnov/aqohct6w5c4l/master/data/rich_apple.png',
+    'Rich Grapefruit': 'https://raw.githubusercontent.com/dmitriismitnov/aqohct6w5c4l/master/data/rich_grapefruit.png',
+    'Mirinda': 'https://raw.githubusercontent.com/dmitriismitnov/aqohct6w5c4l/master/data/mirinda.png',
+    '7 UP': 'https://raw.githubusercontent.com/dmitriismitnov/aqohct6w5c4l/master/data/seven_up.png',
+    'Pepsi': 'https://raw.githubusercontent.com/dmitriismitnov/aqohct6w5c4l/master/data/pepsi.png',
   };
 }
