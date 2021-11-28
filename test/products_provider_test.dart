@@ -21,7 +21,6 @@ void main() {
 
   test('.findPart (check limit)', () async {
     const limit = 10;
-
     final foundProductsList = await productsProvider?.findPart(limit: limit);
 
     expect(foundProductsList, isA<List<ProductModel>>());
