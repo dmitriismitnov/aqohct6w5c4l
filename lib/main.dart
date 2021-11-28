@@ -9,15 +9,47 @@ import 'package:provider/provider.dart';
 import 'screens/main/main.dart';
 
 void main() {
-  runApp(
-    const _AppProviders(
-      child: _App(),
-    ),
-  );
+  runApp(const App());
 }
 
-class _App extends StatelessWidget {
-  const _App({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const AppProviders(
+      child: AppContent(),
+    );
+  }
+}
+
+class AppProviders extends StatelessWidget {
+  final Widget child;
+
+  const AppProviders({
+    required this.child,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Provider<ProductsProvider>(
+      create: (context) {
+        return ProductsProvider(
+          maxLimit: _generateRandomProductsLength(),
+        );
+      },
+      child: child,
+    );
+  }
+
+  int _generateRandomProductsLength() {
+    return math.Random().nextInt(2) == 1 ? 100000 : 1000000;
+  }
+}
+
+class AppContent extends StatelessWidget {
+  const AppContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,30 +90,5 @@ class _App extends StatelessWidget {
       ),
       home: const MainScreen(),
     );
-  }
-}
-
-class _AppProviders extends StatelessWidget {
-  final Widget child;
-
-  const _AppProviders({
-    required this.child,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Provider<ProductsProvider>(
-      create: (context) {
-        return ProductsProvider(
-          maxLimit: _generateRandomProductsLength(),
-        );
-      },
-      child: child,
-    );
-  }
-
-  int _generateRandomProductsLength() {
-    return math.Random().nextInt(2) == 1 ? 100000 : 1000000;
   }
 }
