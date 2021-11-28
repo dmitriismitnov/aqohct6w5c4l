@@ -24,10 +24,6 @@ class ProductsBloc extends Bloc<ProductsBlocEvent, ProductsBlocState> {
   var _productsStore = BuiltList<ProductModel>();
 
   Future<void> _addOneRandom(ProductsBlocEventAddOneRandom event, Emitter<ProductsBlocState> emit) async {
-    if (state.maybeHasMoreReached == true) {
-      return;
-    }
-
     emit(
       ProductsBlocState.pending(
         products: _productsStore.toList(),
@@ -60,10 +56,10 @@ class ProductsBloc extends Bloc<ProductsBlocEvent, ProductsBlocState> {
       ),
     );
 
-    final productsBatch = await _productProvider.load(
-      skip: _productsStore.length,
-      limit: loadLimit,
-    );
+    final productsBatch = await _productProvider.findAll(
+        // skip: _productsStore.length,
+        // limit: loadLimit,
+        );
 
     if (productsBatch.isNotEmpty) {
       final productStoreBuilder = _productsStore.toBuilder()
@@ -111,7 +107,7 @@ class ProductsBloc extends Bloc<ProductsBlocEvent, ProductsBlocState> {
     emit(
       ProductsBlocState.succeeded(
         products: _productsStore.toList(),
-        hasMoreReached: false,
+        hasMoreReached: state.maybeHasMoreReached,
       ),
     );
   }

@@ -69,29 +69,22 @@ class _MainScreenHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return BlocBuilder<ProductsBloc, ProductsBlocState>(
-      buildWhen: (oldState, currentState) {
-        return oldState.maybeHasMoreReached != currentState.maybeHasMoreReached;
-      },
-      builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Меню', style: theme.textTheme.headline1),
-              PrimaryIconButton(
-                isEnabled: state.maybeHasMoreReached == true ? false : true,
-                onPressed: () {
-                  final bloc = context.read<ProductsBloc>();
-                  bloc.add(const ProductsBlocEvent.addOneRandom());
-                },
-                child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
-              )
-            ],
-          ),
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text('Меню', style: theme.textTheme.headline1),
+          PrimaryIconButton(
+            onPressed: () {
+              final bloc = context.read<ProductsBloc>();
+              bloc.add(const ProductsBlocEvent.addOneRandom());
+            },
+            child: Icon(Icons.add, color: theme.colorScheme.onPrimary),
+          )
+        ],
+      ),
     );
+    ;
   }
 }

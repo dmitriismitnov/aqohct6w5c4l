@@ -1,14 +1,19 @@
 part of 'providers.dart';
 
 class ProductProvider {
+  int _removed = 0;
   int _returned = 0;
 
   Future<bool> retrieveHasMoreReached() async {
-    return _returned == _ProductGenerator.generateRandomProductsLength;
+    return _returned + _removed == _ProductGenerator.generateRandomProductsLength;
   }
 
   Future<ProductModel?> create() async {
-    if (_returned + 1 > _ProductGenerator.generateRandomProductsLength) {
+    if (_removed > 0) {
+      _removed -= 1;
+    }
+
+    if (_returned + _removed + 1 > _ProductGenerator.generateRandomProductsLength) {
       return null;
     }
 
@@ -17,7 +22,7 @@ class ProductProvider {
     return _ProductGenerator.generateRandomProduct();
   }
 
-  Future<List<ProductModel>> load({int skip = 0, int limit = 30}) async {
+  Future<List<ProductModel>> findPart({int skip = 0, int limit = 30}) async {
     await _networkDelay();
 
     final resultLength = _calcResultLength(_returned, limit);
@@ -28,18 +33,54 @@ class ProductProvider {
     ];
   }
 
+  Future<List<ProductModel>> findAll() async {
+    final resultLength = _calcResultLength(
+      _returned,
+      _ProductGenerator.generateRandomProductsLength,
+    );
+
+    if (resultLength == 0) {
+      return [];
+    }
+
+    final completer = Completer<List<ProductModel>>();
+
+    if (!Computer().isRunning) {
+      await Computer().turnOn(workersCount: 1);
+    }
+
+    Computer().compute(generateList, param: resultLength).then((result) async {
+      await Computer().turnOff();
+
+      _returned += resultLength;
+      completer.complete(result);
+    }).catchError((error) async {
+      await Computer().turnOff();
+      completer.completeError(error);
+    });
+
+    return completer.future;
+  }
+
+  Future<List<ProductModel>> generateList(int amount) async {
+    return [
+      for (var i = 0; i < amount; i++) _ProductGenerator.generateRandomProduct(),
+    ];
+  }
+
   Future<void> removeById(IdModel id) async {
     if (_returned - 1 >= 0) {
       _returned -= 1;
+      _removed += 1;
     }
   }
 
   int _calcResultLength(int skip, int limit) {
-    if (_ProductGenerator.generateRandomProductsLength <= skip) {
+    if (_ProductGenerator.generateRandomProductsLength - _removed <= skip) {
       return 0;
     }
 
-    final diff = _ProductGenerator.generateRandomProductsLength - (skip + limit);
+    final diff = _ProductGenerator.generateRandomProductsLength - _removed - (skip + limit);
 
     if (diff > 0) {
       if (diff >= limit) {
@@ -64,7 +105,7 @@ class ProductProvider {
 abstract class _ProductGenerator {
   static int? _productsLength;
   static int get generateRandomProductsLength {
-    return _productsLength ??= math.Random().nextInt(2) == 1 ? 60 : 40;
+    return _productsLength ??= math.Random().nextInt(2) == 1 ? 1000 : 10000;
   }
 
   static ProductModel generateRandomProduct() {
