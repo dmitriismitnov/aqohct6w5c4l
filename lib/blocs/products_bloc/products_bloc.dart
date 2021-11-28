@@ -16,8 +16,8 @@ class ProductsBloc extends Bloc<ProductsBlocEvent, ProductsBlocState> {
     ProductsBlocState initialState = const ProductsBlocState.initial(),
   })  : _productProvider = productProvider,
         super(initialState) {
-    on<ProductsBlocEventLoadPart>(_loadPart);
     on<ProductsBlocEventAddOneRandom>(_addOneRandom);
+    on<ProductsBlocEventLoadPart>(_loadPart);
     on<ProductsBlocEventRemoveOneById>(_removeOneById);
   }
 
