@@ -1,6 +1,5 @@
 import 'package:aqohct6w5c4l/blocs/products_bloc/products_bloc.dart';
 import 'package:aqohct6w5c4l/ui/ui.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,7 +40,7 @@ class MainScreenProductsList extends StatelessWidget {
                     final product = state.unsafeProducts[i];
 
                     return MainScreenProductCard(
-                      key: ValueKey(product.id),
+                      key: ValueKey(product.id.parseToString()),
                       product: product,
                     );
                   },
