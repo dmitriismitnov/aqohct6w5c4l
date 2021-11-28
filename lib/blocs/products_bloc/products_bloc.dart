@@ -9,10 +9,10 @@ part 'products_bloc_event.dart';
 part 'products_bloc_state.dart';
 
 class ProductsBloc extends Bloc<ProductsBlocEvent, ProductsBlocState> {
-  final ProductProvider _productProvider;
+  final ProductsProvider _productProvider;
 
   ProductsBloc({
-    required ProductProvider productProvider,
+    required ProductsProvider productProvider,
     ProductsBlocState initialState = const ProductsBlocState.initial(),
   })  : _productProvider = productProvider,
         super(initialState) {

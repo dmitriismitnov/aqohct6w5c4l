@@ -68,7 +68,7 @@ class _MainSceenBlocsProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        final bloc = ProductsBloc(productProvider: ProductProvider());
+        final bloc = ProductsBloc(productProvider: ProductsProvider());
         return bloc..add(const ProductsBlocEvent.loadPart());
       },
       child: child,

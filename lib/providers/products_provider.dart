@@ -1,6 +1,6 @@
 part of 'providers.dart';
 
-class ProductProvider {
+class ProductsProvider {
   int _removed = 0;
   int _returned = 0;
 
