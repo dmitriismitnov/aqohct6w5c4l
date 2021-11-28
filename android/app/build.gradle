@@ -55,6 +55,15 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+
+            //  TODO: Does not work in APK 
+            //  https://github.com/Baseflow/flutter_cached_network_image/issues/497
+            // 
+            //  Solution: 
+            //  https://github.com/tekartik/sqflite/issues/452#issuecomment-731835148
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
 }
