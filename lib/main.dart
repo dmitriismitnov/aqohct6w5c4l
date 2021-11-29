@@ -44,7 +44,10 @@ class AppProviders extends StatelessWidget {
   }
 
   int _generateRandomProductsLength() {
-    return math.Random().nextInt(2) == 1 ? 100000 : 1000000;
+    const min = 100000;
+    const max = 1000000;
+
+    return min + math.Random().nextInt(max - min);
   }
 }
 
